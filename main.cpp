@@ -6,7 +6,7 @@
 
     // dependencies: OpenGL, GLUT
 
-    // command line: ./curvefit <input_file>
+    // command line: ./graph <input_file>
 
     // input file format: <target_x-coordinate>  <target_y-coordinate>\n
 
