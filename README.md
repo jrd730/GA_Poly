@@ -16,10 +16,10 @@ Click anywhere in the window to add new points.
 Keys
 ----
 
-  +t - step forward one generation
-  +g - continuously step forward, press again to halt
-  +r - re-randomize population
-  +c - clear target points
-  ++ - display more polynomials
-  +- - dispayer fewer polynomials
+  -'t'  step forward one generation
+  -'g'  continuously step forward, press again to halt
+  -'r'  re-randomize population
+  -'c'  clear target points
+  -'+'  display more polynomials
+  -'-'  dispayer fewer polynomials
 
