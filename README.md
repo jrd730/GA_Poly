@@ -6,8 +6,8 @@ a stupidly simple genetic algorithm for generating best-fit polynomials
 Usage
 -----
 
-make  
-graph <optional input file>  
+$ make  
+$ graph <optional input file>  
 
 This will open up the OpenGL window showing target points from the input if specified.
 The input file should contain x, y coordinate pairs. 
