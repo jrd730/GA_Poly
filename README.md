@@ -1,7 +1,10 @@
 GA_Poly
 =======
 
-a stupidly simple genetic algorithm for generating best-fit polynomials
+A stupidly simple genetic algorithm for generating best-fit polynomials. 
+Yes, I am aware that there are statistical methods for doing exactly this.
+I made this more as a proof of concept to demonstrate the power and also some of the limitations of genetic algorithms.
+It is also somewhat entertaining to watch the simulation unfold.
 
 Usage
 -----
