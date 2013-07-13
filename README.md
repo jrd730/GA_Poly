@@ -9,10 +9,10 @@ It is also somewhat entertaining to watch the simulation unfold.
 Dependencies
 ------------
 
-OpenGL: all the major operating systems contain native support for OpenGL, hopefully yours does too.
-GLUT (OpenGL Utility Toolkit): a useful API that handles window management and callbacks
+- OpenGL: all the major operating systems contain native support for OpenGL, hopefully yours does too.
+- GLUT (OpenGL Utility Toolkit): a useful API that handles window management and callbacks.
 
-$ sudo apt-get install freeglut3-dev
+    $ sudo apt-get install freeglut3-dev
 
 
 
