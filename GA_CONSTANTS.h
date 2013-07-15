@@ -6,7 +6,7 @@
 #define MAX_DEGREE 4  // how many terms to use in each power series
 #define PARENTING_RATE .75 // percentage of population to use in crossover
 #define MUTATION_RATE .1 // percentage of new population that is mutated
-#define TARGET_AVG_DIFFERENCE .125 // necessay average distance to all points 
+#define TARGET_AVG_DIFFERENCE .125 // necessary average distance to all points 
 #define CLONES 10 // number of clones directly copied over from previous generation
 
 // initial specifies the range for the intial values for coefficients in a power series.
