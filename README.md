@@ -35,5 +35,5 @@ Keys
 - 'r'  re-randomize population
 - 'c'  clear target points
 - '+'  display more polynomials
-- '-'  dispayer fewer polynomials
+- '-'  display fewer polynomials
 
