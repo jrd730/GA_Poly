@@ -18,7 +18,7 @@ void PSeries :: display(){
     glBegin (GL_LINE_STRIP);
         // instead of [-12 to 12] use graphXMin graphXMax
         for (long double x = -12; x <= 12; x += .125){
-            glVertex2f (x, derivative->evaluate(x));
+            glVertex2f (x, this->evaluate(x));
         }
     glEnd();
 }

@@ -37,6 +37,7 @@ using namespace std;
 
 static int height = 600;
 static int width = 800;
+static int display_modemask = 0X0000;
 
 static float graphXMin = -12;
 static float graphXMax = 12;
@@ -143,6 +144,9 @@ void update ()
     ps = newGen;
     generation++;
     score();
+
+    derivative = ps[0].derivative(); 
+    cout << "Derivative: " << derivative << endl;
 }
 
 void displayBest ()
@@ -201,7 +205,7 @@ static void display(void)
         if (display_modemask & 1){
             derivative->display();  
         } else {
-            derivative->display_vectorfield(ps[0]); // vector field of ps[0] 
+            derivative->display_vectorfield(&ps[0]); // vector field of ps[0] 
         }
     }
 
@@ -263,8 +267,6 @@ static void key(unsigned char key, int x, int y)
         case 'D':
         case 'd':
             DERIVATIVE_KEY_MODE=true;
-            derivative = ps[0].derivative(); 
-            cout << derivative << endl;
         break;
         case '-':
             showBest /= 2;
