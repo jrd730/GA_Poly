@@ -145,8 +145,10 @@ void update ()
     generation++;
     score();
 
+    delete derivative;
+    derivative = NULL;
     derivative = ps[0].derivative(); 
-    cout << "Derivative: " << derivative << endl;
+    //cout << "Derivative: " << derivative << endl;
 }
 
 void displayBest ()
@@ -204,7 +206,7 @@ static void display(void)
     if(derivative != NULL){
         if (display_modemask & 1){
             derivative->display();  
-        } else {
+        } else if(display_modemask & 2) {
             derivative->display_vectorfield(&ps[0]); // vector field of ps[0] 
         }
     }

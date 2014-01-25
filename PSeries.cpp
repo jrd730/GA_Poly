@@ -26,12 +26,19 @@ void PSeries :: display(){
 void PSeries :: display_vectorfield(PSeries* ps){
     if (ps){
         glBegin (GL_LINES);
-        glColor3f ((long double) 0.3, (long double) 0.6,  0.4);
-        for (long double x = -12; x <= 12; x += .125){
-            glVertex2f (x, ps->evaluate(x));
-            float dx = 0.001;
-            float dy = ps->evaluate(x+dx);
-            glVertex2f (x+dx, ps->evaluate(x)+dy);
+        glColor3f ((long double) 0.3, (long double) 0.6,  0.5);
+        long double dx = 0.055;
+        for (long double x1 = -12; x1 <= 12; x1 += 1.5){
+            long double y1 = ps->evaluate(x1);
+            glVertex2f (x1, y1);
+
+            long double x2 = x1+dx;
+            long double y2 = ps->evaluate(x2);
+            long double dy = y2-y1;
+
+            long double derivative = this->evaluate(x1);
+            glVertex2f (x1 + dx*25, y1 + dy*25);
+            //cout << x << ", " <<  ps->evaluate(x) << " :: " << x+dx << ", " <<  ps->evaluate(x+dx) << endl;
         }
         glEnd();
     } else {
