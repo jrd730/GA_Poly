@@ -13,6 +13,32 @@ PSeries :: ~PSeries ()
 
 }
 
+void PSeries :: display(){
+    glColor3f ((long double) 0, (long double) 0.2,  0.99);
+    glBegin (GL_LINE_STRIP);
+        // instead of [-12 to 12] use graphXMin graphXMax
+        for (long double x = -12; x <= 12; x += .125){
+            glVertex2f (x, derivative->evaluate(x));
+        }
+    glEnd();
+}
+
+void PSeries :: display_vectorfield(PSeries* ps){
+    if (ps){
+        glBegin (GL_LINES);
+        glColor3f ((long double) 0.3, (long double) 0.6,  0.4);
+        for (long double x = -12; x <= 12; x += .125){
+            glVertex2f (x, ps->evaluate(x));
+            float dx = 0.001;
+            float dy = ps->evaluate(x+dx);
+            glVertex2f (x+dx, ps->evaluate(x)+dy);
+        }
+        glEnd();
+    } else {
+        return;
+    }
+}
+
 ostream & operator<<(ostream &os, const PSeries *obj)
 { 
     if(!obj){

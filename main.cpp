@@ -31,18 +31,8 @@
 #include "PSeries.h"
 #include "Vertex.h"
 #include "GA_CONSTANTS.h"
-#include <algorithm>
-#include <cmath>
-#include <ctime>
-#include <fstream>
-//#include <windows.h>
-#include <iostream>
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-#include <stdlib.h>
+
+
 using namespace std;
 
 static int height = 600;
@@ -204,14 +194,15 @@ static void display(void)
             }
         glEnd();
     }
+
+
     // draw the derivative of the BEST CURVE
     if(derivative != NULL){
-        glColor3f ((long double) 0, (long double) 0.2,  0.99);
-        glBegin (GL_LINE_STRIP);
-            for (long double x = graphXMin; x <= graphXMax; x += .125){
-                glVertex2f (x, derivative->evaluate(x));
-            }
-        glEnd();
+        if (display_modemask & 1){
+            derivative->display();  
+        } else {
+            derivative->display_vectorfield(ps[0]); // vector field of ps[0] 
+        }
     }
 
     glFlush();
@@ -224,12 +215,15 @@ static void key(unsigned char key, int x, int y)
     if(key != 'd' && key != 'D' && DERIVATIVE_KEY_MODE){
         switch(key){
             case '1':
-                // graph tangent lines
-
+                // graph the derivative curve instead
+                display_modemask=0x0001;
             break;
             case '2':
-                // graph the derivative instead
-
+                // graph tangent lines
+                display_modemask=0x0002;
+            break;
+            default:
+                display_modemask=0x0000;
             break;
         }
         DERIVATIVE_KEY_MODE = false;

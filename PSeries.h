@@ -14,11 +14,21 @@
 */
 
 #include <vector>
+
+#include <iostream>
+
 #include <algorithm>
 #include <cmath>
 #include <ctime>
-#include <iostream>
 #include <fstream>
+//#include <windows.h>
+#include <iostream>
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+#include <stdlib.h>
 
 using namespace std;
 
@@ -35,6 +45,8 @@ class PSeries
         PSeries*  derivative();
         void addTerm (long double newCoefficient);
         long double evaluate (long double x);
+        void display(); //draws the curve 
+        void display_vectorfield(PSeries* ps); //magnitude of tangent at arbitrary points given by arg {ps}
 
         vector <long double> coefficient;
 
