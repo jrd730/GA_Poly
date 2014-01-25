@@ -59,9 +59,11 @@ float graphYRange = graphYMax - graphYMin;
 float pixToYCoord = graphYRange/height;
 
 vector <PSeries> ps;
+PSeries* derivative; //just take dervative of best..
 vector <vertex> targetPoint;
 
 bool going (false);
+bool DERIVATIVE_KEY_MODE(false);
 int generation = 0;
 int showBest = 1;
 
@@ -166,7 +168,8 @@ void displayBest ()
     }
     cout << "\n";
     cout << "\ttotal difference  : " << ps[0].difference << "\n";
-    cout << "\taverage difference: " << ps[0].avgDifference << "\n\n";
+    cout << "\taverage difference: " << ps[0].avgDifference << "\n";
+    cout << "\tderivative: " << derivative << "\n\n";
 }
 
 static void display(void)
@@ -201,6 +204,15 @@ static void display(void)
             }
         glEnd();
     }
+    // draw the derivative of the BEST CURVE
+    if(derivative != NULL){
+        glColor3f ((long double) 0, (long double) 0.2,  0.99);
+        glBegin (GL_LINE_STRIP);
+            for (long double x = graphXMin; x <= graphXMax; x += .125){
+                glVertex2f (x, derivative->evaluate(x));
+            }
+        glEnd();
+    }
 
     glFlush();
     glutSwapBuffers();
@@ -208,6 +220,22 @@ static void display(void)
 
 static void key(unsigned char key, int x, int y)
 {
+
+    if(key != 'd' && key != 'D' && DERIVATIVE_KEY_MODE){
+        switch(key){
+            case '1':
+                // graph tangent lines
+
+            break;
+            case '2':
+                // graph the derivative instead
+
+            break;
+        }
+        DERIVATIVE_KEY_MODE = false;
+    }
+
+
     switch (key){
         case 't':
         case 'T':
@@ -238,6 +266,12 @@ static void key(unsigned char key, int x, int y)
             showBest = MAX_POPULATION-1;
         break;
 
+        case 'D':
+        case 'd':
+            DERIVATIVE_KEY_MODE=true;
+            derivative = ps[0].derivative(); 
+            cout << derivative << endl;
+        break;
         case '-':
             showBest /= 2;
             if (showBest < 1)
@@ -245,6 +279,7 @@ static void key(unsigned char key, int x, int y)
         break;
 
     }
+
     //glutPostRedisplay();
 }
 
