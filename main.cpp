@@ -31,22 +31,13 @@
 #include "PSeries.h"
 #include "Vertex.h"
 #include "GA_CONSTANTS.h"
-#include <algorithm>
-#include <cmath>
-#include <ctime>
-#include <fstream>
-//#include <windows.h>
-#include <iostream>
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-#include <stdlib.h>
+
+
 using namespace std;
 
 static int height = 600;
 static int width = 800;
+static int display_modemask = 0X0000;
 
 static float graphXMin = -12;
 static float graphXMax = 12;
@@ -59,9 +50,11 @@ float graphYRange = graphYMax - graphYMin;
 float pixToYCoord = graphYRange/height;
 
 vector <PSeries> ps;
+PSeries* derivative; //just take dervative of best..
 vector <vertex> targetPoint;
 
 bool going (false);
+bool DERIVATIVE_KEY_MODE(false);
 int generation = 0;
 int showBest = 1;
 
@@ -151,6 +144,11 @@ void update ()
     ps = newGen;
     generation++;
     score();
+
+    delete derivative;
+    derivative = NULL;
+    derivative = ps[0].derivative(); 
+    //cout << "Derivative: " << derivative << endl;
 }
 
 void displayBest ()
@@ -166,7 +164,8 @@ void displayBest ()
     }
     cout << "\n";
     cout << "\ttotal difference  : " << ps[0].difference << "\n";
-    cout << "\taverage difference: " << ps[0].avgDifference << "\n\n";
+    cout << "\taverage difference: " << ps[0].avgDifference << "\n";
+    cout << "\tderivative: " << derivative << "\n\n";
 }
 
 static void display(void)
@@ -202,12 +201,41 @@ static void display(void)
         glEnd();
     }
 
+
+    // draw the derivative of the BEST CURVE
+    if(derivative != NULL){
+        if (display_modemask & 1){
+            derivative->display();  
+        } else if(display_modemask & 2) {
+            derivative->display_vectorfield(&ps[0]); // vector field of ps[0] 
+        }
+    }
+
     glFlush();
     glutSwapBuffers();
 }
 
 static void key(unsigned char key, int x, int y)
 {
+
+    if(key != 'd' && key != 'D' && DERIVATIVE_KEY_MODE){
+        switch(key){
+            case '1':
+                // graph the derivative curve instead
+                display_modemask=0x0001;
+            break;
+            case '2':
+                // graph tangent lines
+                display_modemask=0x0002;
+            break;
+            default:
+                display_modemask=0x0000;
+            break;
+        }
+        DERIVATIVE_KEY_MODE = false;
+    }
+
+
     switch (key){
         case 't':
         case 'T':
@@ -238,6 +266,10 @@ static void key(unsigned char key, int x, int y)
             showBest = MAX_POPULATION-1;
         break;
 
+        case 'D':
+        case 'd':
+            DERIVATIVE_KEY_MODE=true;
+        break;
         case '-':
             showBest /= 2;
             if (showBest < 1)
@@ -245,6 +277,7 @@ static void key(unsigned char key, int x, int y)
         break;
 
     }
+
     //glutPostRedisplay();
 }
 
